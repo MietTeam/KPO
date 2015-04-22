@@ -18,8 +18,10 @@ namespace project
                                             "pwd=qwerty;database=mnepizdec;";
         MySqlConnection conn = null;
         MySqlDataReader rdr = null;
-        bool flag = true;
         NewEvent NewEventForm;
+
+        string todayEventsList;
+        todayEvent todayEventForm;
         int j = 0, i = 0;
 
         User userMainForm = new User();
@@ -35,7 +37,6 @@ namespace project
                 conn = new MySql.Data.MySqlClient.MySqlConnection();
                 conn.ConnectionString = myConnectionString;
                 conn.Open();
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
@@ -61,10 +62,11 @@ namespace project
         private void main_Load(object sender, EventArgs e)
         {
             buttonUpdate.PerformClick();
+            todayEventForm = new todayEvent(todayEventsList);
+            todayEventForm.Show();
             checkIfAdmin(userMainForm);
             dataGridAcceptedEvents.ClearSelection();
             timer1.Start();
-            
         }
 
         public void checkIfAdmin(User user)
@@ -81,16 +83,7 @@ namespace project
             conn.Close();
             Application.Exit();
         }
-        private void CheckEvents()
-        {
-            for (int m = 0; m < 6; m++)
-            {
-                if (dataGridAcceptedEvents.Rows[m].Cells["Data"].Value.ToString() == DateTime.Now.ToString("dd/MM/yyyy"))
-                {
-                    MessageBox.Show("Сегодня событие " + dataGridAcceptedEvents.Rows[m].Cells[i++].Value.ToString());
-                }
-            }
-        }
+
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             dataGridAcceptedEvents.Rows.Clear();
@@ -98,13 +91,13 @@ namespace project
             dataGridMessages.Rows.Clear();
             dataGridMessages.RowTemplate.Height = 50;
             
+            
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = "SELECT * FROM events";
                 rdr = cmd.ExecuteReader();
-                String events = "";
                 i = 0;
                 while (rdr.Read())
                 {
@@ -118,14 +111,13 @@ namespace project
                         dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetMySqlDateTime("Date");
                         dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetString("Hours") + ":" + rdr.GetString("Minutes");
                         dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetString("Description");
-                        if (flag)
+                        monthCalendar1.AddBoldedDate(DateTime.ParseExact(dataGridAcceptedEvents.Rows[m].Cells["Data"].Value.ToString(),"dd/MM/yyyy",null));
+                        if (dataGridAcceptedEvents.Rows[m].Cells["Data"].Value.ToString() == DateTime.Now.ToString("dd/MM/yyyy"))
                         {
-                            if (dataGridAcceptedEvents.Rows[m].Cells["Data"].Value.ToString() == DateTime.Now.ToString("dd/MM/yyyy"))
-                            {
-                                events += dataGridAcceptedEvents.Rows[m].Cells[1].Value.ToString() + "\n";
-                            }
+                            todayEventsList += dataGridAcceptedEvents.Rows[m].Cells["NameEvent"].Value.ToString() + " в " +
+                                                      dataGridAcceptedEvents.Rows[m].Cells["Time"].Value.ToString() + System.Environment.NewLine;
                         }
-                            i = 0;
+                        i = 0;
                     }
                     else
                     {
@@ -141,11 +133,8 @@ namespace project
                         j = 0;
                     }
                 }
-                if(flag)
-                {
-                    MessageBox.Show("Сегодня события: \n" + events);
-                }
-                flag = false;
+                labelAcceptedEventsCount.Text = "Утвержденных событий: " + dataGridAcceptedEvents.DisplayedRowCount(true).ToString();
+
                 rdr.Close();
                 cmd.CommandText = "SELECT * FROM messages WHERE ID_user = '" + userMainForm.id + "'";
                 rdr = cmd.ExecuteReader();
@@ -204,32 +193,45 @@ namespace project
 
         private void tabChanged()
         {
-            if (dataGridMessages.RowCount == 0) textBoxNoNewMessages.Visible = true;
+            if (dataGridMessages.RowCount == 0)
+            {
+                textBoxNoNewMessages.Visible = true;
+                textBoxNoNewMessages.BringToFront();
+            }
             else textBoxNoNewMessages.Visible = false;
 
-            if (dataGridNewEvents.RowCount == 0) textBoxNoNewEvents.Visible = true;
+            if (dataGridNewEvents.RowCount == 0)
+            {
+                textBoxNoNewEvents.Visible = true;
+                textBoxNoNewEvents.BringToFront();
+            }
             else textBoxNoNewEvents.Visible = false;
 
-            if (dataGridAcceptedEvents.RowCount == 0) textBoxNoAcceptedEvents.Visible = true;
-            else textBoxNoNewEvents.Visible = false;
+            if (dataGridAcceptedEvents.RowCount == 0)
+            {
+                textBoxNoAcceptedEvents.Visible = true;
+                textBoxNoAcceptedEvents.BringToFront();
+            }
+            else textBoxNoAcceptedEvents.Visible = false;
+            
 
             if (tabControl1.SelectedTab == tabControl1.TabPages[2])
             {
                 buttonDeleteMessages.Enabled = true;
             }
             else buttonDeleteMessages.Enabled = false;
+
+            if (tabControl1.SelectedTab == tabControl1.TabPages[0])
+            {
+                deleteEventToolStripMenuItem.Enabled = true;
+            }
+            else deleteEventToolStripMenuItem.Enabled = false;
         }
 
         // появление кнопки "удалить все сообщения"
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             tabChanged();
-        }
-
-        private void buttonAddEvent_Click(object sender, EventArgs e)
-        {
-            NewEventForm.Show();
-            this.Hide();
         }
 
         // смена пользователя
@@ -268,10 +270,34 @@ namespace project
 
         private void dataGridAcceptedEvents_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            buttonDeleteAcceptedEvent.Enabled = true;
+            deleteEventToolStripMenuItem.Enabled = true;
         }
 
-        private void buttonDeleteAcceptedEvent_Click(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            buttonUpdate.PerformClick();
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            int count = 0;
+            for(int i = 0; i < dataGridAcceptedEvents.RowCount; i++)
+            {
+                if (dataGridAcceptedEvents.Rows[i].Cells["Data"].Value.ToString() == monthCalendar1.SelectionStart.ToString("dd/MM/yy"))
+                {
+                    count++;
+                }
+            }
+            labelSelectedDateEvents.Text = "Событий в выделенный день: " + count.ToString();
+        }
+
+        private void addEventToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewEventForm.Show();
+            this.Hide();
+        }
+
+        private void deleteEventToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int rowIndexToDelete = dataGridAcceptedEvents.SelectedCells[0].RowIndex;
 
@@ -291,10 +317,9 @@ namespace project
             buttonUpdate.PerformClick();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void todayEventsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buttonUpdate.PerformClick();
-            
-        }
+            todayEventForm.Show();
+        } 
     }
 }
