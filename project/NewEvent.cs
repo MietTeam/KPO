@@ -20,6 +20,7 @@ namespace project
 
         User userNewEvent = new User();
         main MainForm;
+        public bool checkFill = true;
 
         public NewEvent(main backForm, User user)
         {
@@ -51,6 +52,7 @@ namespace project
         {
             if (textBoxTitle.Text == "" || textBoxDescription.Text == "")
             {
+                checkFill = false;
                 MessageBox.Show("Все поля обязательны для заполнения", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else 

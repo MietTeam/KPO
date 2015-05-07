@@ -110,5 +110,14 @@ namespace project
             testNewEvent.buttonBack_Click(null, null);
             Assert.IsTrue(testNewEvent.isMainVisible());
         }
+        [TestMethod]
+        public void buttonSend()
+        {
+            main testMain = new main(createUser());
+            NewEvent testNewEvent = new NewEvent(testMain, createUser());
+            testNewEvent.fillForm(null, null);
+            testNewEvent.buttonSend_Click(null, null);
+            Assert.AreEqual(false, testNewEvent.checkFill);
+        }
     }
 }
