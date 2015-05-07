@@ -14,7 +14,8 @@ namespace project
         public todayEvent(string todayEventList)
         {
             InitializeComponent();
-            textBoxEventsList.Text = todayEventList;
+            if (todayEventList == "") textBoxEventsList.Text = "На сегодняшний день нет событий";
+            else textBoxEventsList.Text = todayEventList;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

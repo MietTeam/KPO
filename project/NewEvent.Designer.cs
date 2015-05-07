@@ -96,6 +96,7 @@
             // textBoxTitle
             // 
             this.textBoxTitle.Location = new System.Drawing.Point(129, 13);
+            this.textBoxTitle.MaxLength = 50;
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(328, 22);
             this.textBoxTitle.TabIndex = 5;
@@ -308,7 +309,7 @@
             // NewEvent
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(501, 486);
+            this.ClientSize = new System.Drawing.Size(497, 482);
             this.ControlBox = false;
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.comboBoxMinutes);

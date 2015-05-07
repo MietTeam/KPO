@@ -46,7 +46,7 @@
             // textBoxEventsList
             // 
             this.textBoxEventsList.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.textBoxEventsList.Font = new System.Drawing.Font("Lucida Fax", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxEventsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxEventsList.Location = new System.Drawing.Point(47, 71);
             this.textBoxEventsList.Multiline = true;
             this.textBoxEventsList.Name = "textBoxEventsList";
