@@ -24,7 +24,7 @@ namespace project
         User user = new User();
 
         static string myConnectionString = "server=172.18.12.55;uid=admin;" +
-                                            "pwd=qwerty;database=mnepizdec;";
+                                            "pwd=admin;database=kpodb;";
         MySqlConnection conn = null;
         MySqlDataReader rdr = null;
 
@@ -34,7 +34,6 @@ namespace project
         public authorisation()
         {
             InitializeComponent();
-            
 
             // автологин админом
             textBoxLogin.Text = "admin";
@@ -95,6 +94,20 @@ namespace project
         {
             if (!checkBox1.Checked) textBoxPassword.UseSystemPasswordChar = true;
             if(checkBox1.Checked) textBoxPassword.UseSystemPasswordChar = false; 
+        }
+
+        // для тестов
+        // для тестов
+        // для тестов
+
+        public void setLoginPass(string name,string password)
+        {
+            textBoxLogin.Text = name;
+            textBoxPassword.Text = password;
+        }
+        public bool authorisationVisible()
+        {
+            return this.Visible;
         }
     }
 }

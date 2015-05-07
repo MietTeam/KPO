@@ -15,7 +15,7 @@ namespace project
     public partial class main : Form
     {
         static string myConnectionString = "server=172.18.12.55;uid=admin;" +
-                                            "pwd=qwerty;database=mnepizdec;";
+                                            "pwd=admin;database=kpodb;";
         MySqlConnection conn = null;
         MySqlDataReader rdr = null;
         NewEvent NewEventForm;
@@ -24,7 +24,8 @@ namespace project
         todayEvent todayEventForm;
         int j = 0, i = 0;
 
-        User userMainForm = new User();
+        User userMainForm;
+
         public main(User user)
         {
             InitializeComponent();
@@ -84,12 +85,13 @@ namespace project
             Application.Exit();
         }
 
-        private void buttonUpdate_Click(object sender, EventArgs e)
+        public void buttonUpdate_Click(object sender, EventArgs e)
         {
             dataGridAcceptedEvents.Rows.Clear();
             dataGridNewEvents.Rows.Clear();
             dataGridMessages.Rows.Clear();
             dataGridMessages.RowTemplate.Height = 50;
+            todayEventsList = "";
             
             
             try
@@ -127,7 +129,7 @@ namespace project
                         dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetString("Type");
                         dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetString("Priority");
                         dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetMySqlDateTime("Date");
-                        dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetString("Hours") + ":" + rdr.GetString("Minutes"); ;
+                        dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetString("Hours") + ":" + rdr.GetString("Minutes");
                         dataGridNewEvents.Rows[n].Cells[j++].Value = rdr.GetString("Description");
                         dataGridNewEvents.Rows[n].Cells["ID_user"].Value = rdr.GetString("IDUser");
                         j = 0;
@@ -160,6 +162,7 @@ namespace project
         // кнопки "приянть" и "отклонить"
         private void dataGridNewEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
             string eventID = dataGridNewEvents.Rows[e.RowIndex].Cells[0].Value.ToString();
             try
             {
@@ -197,22 +200,37 @@ namespace project
             {
                 textBoxNoNewMessages.Visible = true;
                 textBoxNoNewMessages.BringToFront();
+                dataGridMessages.Enabled = false;
             }
-            else textBoxNoNewMessages.Visible = false;
+            else
+            {
+                textBoxNoNewMessages.Visible = false;
+                dataGridMessages.Enabled = true;
+            }
 
             if (dataGridNewEvents.RowCount == 0)
             {
                 textBoxNoNewEvents.Visible = true;
                 textBoxNoNewEvents.BringToFront();
+                dataGridNewEvents.Enabled = false;
             }
-            else textBoxNoNewEvents.Visible = false;
+            else
+            {
+                textBoxNoNewEvents.Visible = false;
+                dataGridNewEvents.Enabled = true;
+            }
 
             if (dataGridAcceptedEvents.RowCount == 0)
             {
                 textBoxNoAcceptedEvents.Visible = true;
                 textBoxNoAcceptedEvents.BringToFront();
+                dataGridAcceptedEvents.Enabled = false;
             }
-            else textBoxNoAcceptedEvents.Visible = false;
+            else
+            {
+                textBoxNoAcceptedEvents.Visible = false;
+                dataGridAcceptedEvents.Enabled = true;
+            }
             
 
             if (tabControl1.SelectedTab == tabControl1.TabPages[2])
@@ -235,13 +253,13 @@ namespace project
         }
 
         // смена пользователя
-        private void changeUserToolStripMenuItem_Click(object sender, EventArgs e)
+        public void changeUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             authorisation auth = new authorisation();
             auth.Show();
             this.Hide();
         }
-
+        
         private void buttonDeleteMessages_Click(object sender, EventArgs e)
         {
             try
@@ -275,7 +293,7 @@ namespace project
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            buttonUpdate.PerformClick();
+            // buttonUpdate.PerformClick();
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
@@ -283,7 +301,7 @@ namespace project
             int count = 0;
             for(int i = 0; i < dataGridAcceptedEvents.RowCount; i++)
             {
-                if (dataGridAcceptedEvents.Rows[i].Cells["Data"].Value.ToString() == monthCalendar1.SelectionStart.ToString("dd/MM/yy"))
+                if (dataGridAcceptedEvents.Rows[i].Cells["Data"].Value.ToString() == monthCalendar1.SelectionStart.ToString("dd/MM/yyyy"))
                 {
                     count++;
                 }
@@ -296,6 +314,7 @@ namespace project
             NewEventForm.Show();
             this.Hide();
         }
+        
 
         private void deleteEventToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -319,7 +338,55 @@ namespace project
 
         private void todayEventsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            todayEventForm = new todayEvent(todayEventsList);
             todayEventForm.Show();
         } 
+
+        // для тестов
+        // для тестов
+        // для тестов
+
+        public bool PushButtons()
+        {
+            return buttonUpdate.IsHandleCreated;
+        }
+
+        public string[] getLastEvent()
+        {
+            string[] str = new string[2];
+            int m = dataGridAcceptedEvents.Rows.Count - 1;
+            str[0] = dataGridAcceptedEvents.Rows[m].Cells["NameEvent"].Value.ToString();
+            //dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetString("Type");
+            //dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetString("Priority");
+            //dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetMySqlDateTime("Date");
+            //dataGridAcceptedEvents.Rows[m].Cells[i++].Value = rdr.GetString("Hours") + ":" + rdr.GetString("Minutes");
+            str[1] = dataGridAcceptedEvents.Rows[m].Cells["Discription"].Value.ToString();
+
+            return str;
+        }
+        
+        public void deleteTestEvent()
+        {
+            string eventID = dataGridAcceptedEvents.Rows[dataGridAcceptedEvents.Rows.Count - 1].Cells[0].Value.ToString();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "DELETE FROM events WHERE ID_event='" + eventID + "'";
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error: {0}" + ex.ToString());
+            }
+            buttonUpdate.PerformClick();
+        }
+
+        public bool todayEventsVisible()
+        {
+            todayEventForm = new todayEvent(todayEventsList);
+            todayEventForm.Show();
+            return todayEventForm.Visible;
+        }
     }
 }

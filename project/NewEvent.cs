@@ -15,12 +15,12 @@ namespace project
     {
 
         static string myConnectionString = "server=172.18.12.55;uid=admin;" +
-                                            "pwd=qwerty;database=mnepizdec;";
+                                            "pwd=admin;database=kpodb;";
         MySqlConnection conn = null;
-        MySqlDataReader rdr = null;
 
         User userNewEvent = new User();
         main MainForm;
+
         public NewEvent(main backForm, User user)
         {
             InitializeComponent();
@@ -45,12 +45,9 @@ namespace project
             comboBoxPriority.SelectedIndex = 1;
             comboBoxType.SelectedIndex = 0;
             dateTimePicker1.MinDate = DateTime.Now;
-            
         }
-        
 
-
-        private void buttonSend_Click(object sender, EventArgs e)
+        public void buttonSend_Click(object sender, EventArgs e)
         {
             if (textBoxTitle.Text == "" || textBoxDescription.Text == "")
             {
@@ -77,26 +74,27 @@ namespace project
                                         userNewEvent.id            + "')";
                     cmd.ExecuteNonQuery();
                     if (autoAccept == "0") MessageBox.Show("Информация о мероприятии отправлена на рассмотрение", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    else MessageBox.Show("Мероприятие добавлено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 catch (MySqlException ex)
                 {
                     MessageBox.Show("Error: {0}" + ex.ToString());
                 }
                 buttonClear.PerformClick();
-                MainForm.Show();
-                this.Hide();
+                //MainForm.Show();
+                //this.Hide();
             }
         }
 
-        private void buttonBack_Click(object sender, EventArgs e)
+        public void buttonBack_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainForm.Show();  
+            MainForm.Show();
         }
 
-        private void buttonClear_Click(object sender, EventArgs e)
+        public void buttonClear_Click(object sender, EventArgs e)
         {
-            textBoxTitle.Clear();
+            this.textBoxTitle.Clear();
             textBoxDescription.Clear();
             comboBoxHours.SelectedIndex = 0;
             comboBoxMinutes.SelectedIndex = 0;
@@ -104,5 +102,54 @@ namespace project
             comboBoxType.SelectedIndex = 0;
         }
 
+        // для тестов
+        // для тестов
+        // для тестов
+
+        public string getTitle()
+        {
+            return textBoxTitle.Text.Trim();
+        }
+        public string getDescription()
+        {
+            return textBoxDescription.Text;
+        }
+        public string getType()
+        {
+            return comboBoxType.Text;
+        }
+        public string getPriority()
+        {
+            return comboBoxPriority.Text;
+        }
+        public void setTitle(string title)
+        {
+            textBoxTitle.Text = title;
+        }
+        public void setDescription(string description)
+        {
+            textBoxDescription.Text = description;
+        }
+
+        public void fillForm(string title, string description)
+        {
+            setTitle(title);
+            setDescription(description);
+            comboBoxHours.SelectedIndex = 0;
+            comboBoxMinutes.SelectedIndex = 0;
+            comboBoxPriority.SelectedIndex = 1;
+            comboBoxType.SelectedIndex = 0;
+            dateTimePicker1.Checked = true;
+            dateTimePicker1.Value = DateTime.Now;
+            if (dateTimePicker1.Handle == null)
+                System.Threading.Thread.Sleep(0);
+            dateTimePicker1.Checked = false;
+            DateTime result = dateTimePicker1.Value;
+            dateTimePicker1.Text = DateTime.Today.ToString(dateTimePicker1.CustomFormat);
+        }
+        public bool isMainVisible()
+        {
+            return MainForm.Visible;
+        }
     }
 }
