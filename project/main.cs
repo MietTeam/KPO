@@ -298,11 +298,11 @@ namespace project
         private void dataGridAcceptedEvents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             MessageBox.Show(dataGridAcceptedEvents.Rows[e.RowIndex].Cells[1].Value.ToString() + "\n" +
-                            "Приоритет: " + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[2].Value.ToString() + "\n" +
-                            "Тип: " + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[3].Value.ToString() + "\n" +
-                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[4].Value.ToString() + "\n" +
-                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[5].Value.ToString() + "\n" +
-                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[6].Value.ToString(),"Подробности");
+                            "Приоритет:\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[2].Value.ToString() + "\n" +
+                            "Тип:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[3].Value.ToString() + "\n" +
+                            "Дата:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[4].Value.ToString() + "\n" +
+                            "Время:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[5].Value.ToString() + "\n" +
+                            "Описание: \n" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[6].Value.ToString(), "Подробности");
             
         }
 
