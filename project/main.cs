@@ -294,6 +294,7 @@ namespace project
         {
             if(userMainForm.isAdmin)
             deleteEventToolStripMenuItem.Enabled = true;
+            else deleteEventToolStripMenuItem.Enabled = false;
         }
 
         private void dataGridAcceptedEvents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
