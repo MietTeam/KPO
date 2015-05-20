@@ -120,6 +120,7 @@ namespace project
                                                       dataGridAcceptedEvents.Rows[m].Cells["Time"].Value.ToString() + System.Environment.NewLine;
                         }
                         i = 0;
+                        
                     }
                     else
                     {
@@ -135,7 +136,10 @@ namespace project
                         j = 0;
                     }
                 }
-                labelAcceptedEventsCount.Text = "Утвержденных событий: " + dataGridAcceptedEvents.DisplayedRowCount(true).ToString();
+                monthCalendar1.UpdateBoldedDates();
+                tabControl1.TabPages[0].Text = "Утвержденные события (" + dataGridAcceptedEvents.DisplayedRowCount(true).ToString() + ")";
+                tabControl1.TabPages[1].Text = "Рассматриваемые события (" + dataGridNewEvents.DisplayedRowCount(true).ToString() + ")";
+                tabControl1.TabPages[2].Text = "Сообщения (" + dataGridMessages.DisplayedRowCount(true).ToString() + ")";
 
                 rdr.Close();
                 cmd.CommandText = "SELECT * FROM messages WHERE ID_user = '" + userMainForm.id + "'";
@@ -291,6 +295,17 @@ namespace project
             deleteEventToolStripMenuItem.Enabled = true;
         }
 
+        private void dataGridAcceptedEvents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show(dataGridAcceptedEvents.Rows[e.RowIndex].Cells[1].Value.ToString() + "\n" +
+                            "Приоритет: " + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[2].Value.ToString() + "\n" +
+                            "Тип: " + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[3].Value.ToString() + "\n" +
+                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[4].Value.ToString() + "\n" +
+                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[5].Value.ToString() + "\n" +
+                            dataGridAcceptedEvents.Rows[e.RowIndex].Cells[6].Value.ToString(),"Подробности");
+            
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             // buttonUpdate.PerformClick();
@@ -301,8 +316,10 @@ namespace project
             int count = 0;
             for(int i = 0; i < dataGridAcceptedEvents.RowCount; i++)
             {
+                dataGridAcceptedEvents.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 if (dataGridAcceptedEvents.Rows[i].Cells["Data"].Value.ToString() == monthCalendar1.SelectionStart.ToString("dd/MM/yyyy"))
                 {
+                    dataGridAcceptedEvents.Rows[i].DefaultCellStyle.BackColor = Color.Gold;
                     count++;
                 }
             }
@@ -388,5 +405,6 @@ namespace project
             todayEventForm.Show();
             return todayEventForm.Visible;
         }
+
     }
 }
