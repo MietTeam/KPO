@@ -179,7 +179,7 @@
             // 
             this.addEventToolStripMenuItem.Name = "addEventToolStripMenuItem";
             this.addEventToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
-            this.addEventToolStripMenuItem.Text = "Добавить событе";
+            this.addEventToolStripMenuItem.Text = "Добавить событие";
             this.addEventToolStripMenuItem.Click += new System.EventHandler(this.addEventToolStripMenuItem_Click);
             // 
             // deleteEventToolStripMenuItem

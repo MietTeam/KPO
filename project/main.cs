@@ -188,7 +188,7 @@ namespace project
                 cmd.CommandText = "INSERT INTO messages (ID_user, Message, Date) VALUES ('" + dataGridNewEvents.Rows[e.RowIndex].Cells["ID_user"].Value.ToString() + "', '" +
                                         "Ваша заявка № " + dataGridNewEvents.Rows[e.RowIndex].Cells[0].Value.ToString() +
                                         " на добавление события " + dataGridNewEvents.Rows[e.RowIndex].Cells[1].Value.ToString() +
-                                        " " + eventStatus + "', '" + DateTime.Now.ToString() + "')";
+                                        " " + eventStatus + "', '" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (MySqlException ex)
