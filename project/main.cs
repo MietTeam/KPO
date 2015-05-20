@@ -292,6 +292,7 @@ namespace project
 
         private void dataGridAcceptedEvents_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(userMainForm.isAdmin)
             deleteEventToolStripMenuItem.Enabled = true;
         }
 
