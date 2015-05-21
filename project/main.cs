@@ -354,6 +354,25 @@ namespace project
             }
             buttonUpdate.PerformClick();
         }
+        private void deleteRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int rowIndexToDelete = dataGridAcceptedEvents.SelectedCells[0].RowIndex;
+            string eventID = dataGridAcceptedEvents.Rows[rowIndexToDelete].Cells[0].Value.ToString();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "INSERT INTO messages (ID_user, Message, Date) VALUES ('1', '" +
+                                        "Запрос на удаление события " + dataGridAcceptedEvents.Rows[rowIndexToDelete].Cells[1].Value.ToString() +
+                                        " " + "', '" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error: {0}" + ex.ToString());
+            }
+            buttonUpdate.PerformClick();
+        }
 
         private void todayEventsToolStripMenuItem_Click(object sender, EventArgs e)
         {
