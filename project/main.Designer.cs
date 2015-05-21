@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -78,7 +78,6 @@
             this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonDeleteMessages = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.labelAcceptedEventsCount = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.labelSelectedDateEvents = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
@@ -104,7 +103,7 @@
             // 
             // buttonExit
             // 
-            this.buttonExit.Location = new System.Drawing.Point(1070, 629);
+            this.buttonExit.Location = new System.Drawing.Point(1025, 573);
             this.buttonExit.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(97, 28);
@@ -180,7 +179,7 @@
             // 
             this.addEventToolStripMenuItem.Name = "addEventToolStripMenuItem";
             this.addEventToolStripMenuItem.Size = new System.Drawing.Size(302, 24);
-            this.addEventToolStripMenuItem.Text = "Добавить событе";
+            this.addEventToolStripMenuItem.Text = "Добавить событие";
             this.addEventToolStripMenuItem.Click += new System.EventHandler(this.addEventToolStripMenuItem_Click);
             // 
             // deleteEventToolStripMenuItem
@@ -210,14 +209,14 @@
             this.dataGridAcceptedEvents.AllowUserToAddRows = false;
             this.dataGridAcceptedEvents.AllowUserToDeleteRows = false;
             this.dataGridAcceptedEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridAcceptedEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridAcceptedEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridAcceptedEvents.ColumnHeadersHeight = 30;
             this.dataGridAcceptedEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IDEvent,
@@ -236,6 +235,7 @@
             this.dataGridAcceptedEvents.Size = new System.Drawing.Size(949, 549);
             this.dataGridAcceptedEvents.TabIndex = 4;
             this.dataGridAcceptedEvents.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridAcceptedEvents_CellClick);
+            this.dataGridAcceptedEvents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridAcceptedEvents_CellDoubleClick);
             // 
             // IDEvent
             // 
@@ -353,14 +353,14 @@
             this.dataGridNewEvents.AllowUserToAddRows = false;
             this.dataGridNewEvents.AllowUserToDeleteRows = false;
             this.dataGridNewEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridNewEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridNewEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridNewEvents.ColumnHeadersHeight = 30;
             this.dataGridNewEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -427,9 +427,9 @@
             // 
             // Accept
             // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Lime;
-            this.Accept.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Lime;
+            this.Accept.DefaultCellStyle = dataGridViewCellStyle3;
             this.Accept.HeaderText = "";
             this.Accept.Name = "Accept";
             this.Accept.ReadOnly = true;
@@ -486,14 +486,14 @@
             this.dataGridMessages.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Date,
             this.Message});
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridMessages.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridMessages.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridMessages.Location = new System.Drawing.Point(0, 0);
             this.dataGridMessages.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridMessages.Name = "dataGridMessages";
@@ -505,8 +505,8 @@
             // 
             // Date
             // 
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Date.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Date.DefaultCellStyle = dataGridViewCellStyle4;
             this.Date.HeaderText = "Дата и время";
             this.Date.Name = "Date";
             this.Date.ReadOnly = true;
@@ -537,16 +537,6 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // labelAcceptedEventsCount
-            // 
-            this.labelAcceptedEventsCount.AutoSize = true;
-            this.labelAcceptedEventsCount.BackColor = System.Drawing.Color.Transparent;
-            this.labelAcceptedEventsCount.Location = new System.Drawing.Point(36, 629);
-            this.labelAcceptedEventsCount.Name = "labelAcceptedEventsCount";
-            this.labelAcceptedEventsCount.Size = new System.Drawing.Size(172, 17);
-            this.labelAcceptedEventsCount.TabIndex = 8;
-            this.labelAcceptedEventsCount.Text = "Утвержденных событий: ";
-            // 
             // monthCalendar1
             // 
             this.monthCalendar1.Location = new System.Drawing.Point(975, 60);
@@ -558,7 +548,7 @@
             // labelSelectedDateEvents
             // 
             this.labelSelectedDateEvents.AutoSize = true;
-            this.labelSelectedDateEvents.BackColor = System.Drawing.SystemColors.Control;
+            this.labelSelectedDateEvents.BackColor = System.Drawing.Color.Gold;
             this.labelSelectedDateEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelSelectedDateEvents.Location = new System.Drawing.Point(967, 285);
             this.labelSelectedDateEvents.Name = "labelSelectedDateEvents";
@@ -573,10 +563,9 @@
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.BackgroundImage = global::project.Properties.Resources.abstract_colors_eola_gray;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1190, 676);
+            this.ClientSize = new System.Drawing.Size(1190, 613);
             this.Controls.Add(this.labelSelectedDateEvents);
             this.Controls.Add(this.monthCalendar1);
-            this.Controls.Add(this.labelAcceptedEventsCount);
             this.Controls.Add(this.buttonDeleteMessages);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.buttonExit);
@@ -645,7 +634,6 @@
         private System.Windows.Forms.TextBox textBoxNoNewMessages;
         private System.Windows.Forms.TextBox textBoxNoAcceptedEvents;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label labelAcceptedEventsCount;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label labelSelectedDateEvents;
         private System.Windows.Forms.ToolStripMenuItem событиеToolStripMenuItem;

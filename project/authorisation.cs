@@ -67,7 +67,16 @@ namespace project
             bool flag = false;
             string stm = "SELECT * FROM accounts";
             MySqlCommand cmd = new MySqlCommand(stm, conn);
-            rdr = cmd.ExecuteReader();
+            try
+            {
+                rdr = cmd.ExecuteReader();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Ошибка: Невозможно связаться с удаленным сервером");
+                this.Close();
+                Environment.Exit(1);
+            }
             while (rdr.Read())
             {
                 if (textBoxLogin.Text == rdr.GetString("Login") && textBoxPassword.Text == rdr.GetString("Password"))

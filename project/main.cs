@@ -120,6 +120,7 @@ namespace project
                                                       dataGridAcceptedEvents.Rows[m].Cells["Time"].Value.ToString() + System.Environment.NewLine;
                         }
                         i = 0;
+                        
                     }
                     else
                     {
@@ -135,7 +136,10 @@ namespace project
                         j = 0;
                     }
                 }
-                labelAcceptedEventsCount.Text = "Утвержденных событий: " + dataGridAcceptedEvents.DisplayedRowCount(true).ToString();
+                monthCalendar1.UpdateBoldedDates();
+                tabControl1.TabPages[0].Text = "Утвержденные события (" + dataGridAcceptedEvents.DisplayedRowCount(true).ToString() + ")";
+                tabControl1.TabPages[1].Text = "Рассматриваемые события (" + dataGridNewEvents.DisplayedRowCount(true).ToString() + ")";
+                tabControl1.TabPages[2].Text = "Сообщения (" + dataGridMessages.DisplayedRowCount(true).ToString() + ")";
 
                 rdr.Close();
                 cmd.CommandText = "SELECT * FROM messages WHERE ID_user = '" + userMainForm.id + "'";
@@ -184,7 +188,7 @@ namespace project
                 cmd.CommandText = "INSERT INTO messages (ID_user, Message, Date) VALUES ('" + dataGridNewEvents.Rows[e.RowIndex].Cells["ID_user"].Value.ToString() + "', '" +
                                         "Ваша заявка № " + dataGridNewEvents.Rows[e.RowIndex].Cells[0].Value.ToString() +
                                         " на добавление события " + dataGridNewEvents.Rows[e.RowIndex].Cells[1].Value.ToString() +
-                                        " " + eventStatus + "', '" + DateTime.Now.ToString() + "')";
+                                        " " + eventStatus + "', '" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (MySqlException ex)
@@ -288,7 +292,20 @@ namespace project
 
         private void dataGridAcceptedEvents_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(userMainForm.isAdmin)
             deleteEventToolStripMenuItem.Enabled = true;
+            else deleteEventToolStripMenuItem.Enabled = false;
+        }
+
+        private void dataGridAcceptedEvents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show(dataGridAcceptedEvents.Rows[e.RowIndex].Cells[1].Value.ToString() + "\n" +
+                            "Приоритет:\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[2].Value.ToString() + "\n" +
+                            "Тип:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[3].Value.ToString() + "\n" +
+                            "Дата:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[4].Value.ToString() + "\n" +
+                            "Время:\t\t" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[5].Value.ToString() + "\n" +
+                            "Описание: \n" + dataGridAcceptedEvents.Rows[e.RowIndex].Cells[6].Value.ToString(), "Подробности");
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -301,8 +318,10 @@ namespace project
             int count = 0;
             for(int i = 0; i < dataGridAcceptedEvents.RowCount; i++)
             {
+                dataGridAcceptedEvents.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 if (dataGridAcceptedEvents.Rows[i].Cells["Data"].Value.ToString() == monthCalendar1.SelectionStart.ToString("dd/MM/yyyy"))
                 {
+                    dataGridAcceptedEvents.Rows[i].DefaultCellStyle.BackColor = Color.Gold;
                     count++;
                 }
             }
@@ -388,5 +407,6 @@ namespace project
             todayEventForm.Show();
             return todayEventForm.Visible;
         }
+
     }
 }
